@@ -5,7 +5,6 @@ import 'package:tflite/tflite.dart';
 
 import '../main.dart';
 
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -33,7 +32,7 @@ class _TongueTestState extends State<HomePage> {
   }
 
   loadCamera() {
-    _controller = CameraController(cameras.last, ResolutionPreset.ultraHigh);
+    _controller = CameraController(cameras.first, ResolutionPreset.ultraHigh);
   }
 
   runModel() async {
@@ -61,11 +60,8 @@ class _TongueTestState extends State<HomePage> {
         model: "assets/model.tflite",
         labels: "assets/labels.txt",
         numThreads: 1,
-        isAsset:
-            true,
-        useGpuDelegate:
-            false
-        );
+        isAsset: true,
+        useGpuDelegate: false);
   }
 
   @override
@@ -83,25 +79,6 @@ class _TongueTestState extends State<HomePage> {
                 fit: StackFit.loose,
                 children: [
                   CameraPreview(_controller),
-                  Container(
-                    height: screenSize.height / 4,
-                    margin: EdgeInsets.only(
-                        left: screenSize.width / 4,
-                        right: screenSize.width / 4,
-                        top: screenSize.width / 2),
-                    decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(200),
-                            bottomRight: Radius.circular(200)),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        )),
-                  ),
-                  Text(output,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 20)),
                 ],
               ),
             );

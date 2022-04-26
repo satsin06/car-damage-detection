@@ -1,3 +1,2 @@
-0 Vatta
-1 Pitta
-2 Kapha
+Damage
+Undamage
