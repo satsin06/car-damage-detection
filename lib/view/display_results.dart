@@ -27,12 +27,12 @@ class _DisplayPictureScreenState extends State<DisplayResult> {
 
   runModel() async {
     var recognitions = await Tflite.runModelOnImage(
-        path: widget.imagePath, // required
-        imageMean: 0.0, // defaults to 117.0
-        imageStd: 255.0, // defaults to 1.0
-        numResults: 2, // defaults to 5
-        threshold: 0.2, // defaults to 0.1
-        asynch: true // defaults to true
+        path: widget.imagePath, 
+        imageMean: 0.0, 
+        imageStd: 255.0, 
+        numResults: 2, 
+        threshold: 0.2, 
+        asynch: true 
         );
     for (var element in recognitions!) {
       setState(() {
@@ -45,11 +45,11 @@ class _DisplayPictureScreenState extends State<DisplayResult> {
     await Tflite.loadModel(
         model: "assets/model.tflite",
         labels: "assets/labels.txt",
-        numThreads: 1, // defaults to 1
+        numThreads: 1, 
         isAsset:
-            true, // defaults to true, set to false to load resources outside assets
+            true, 
         useGpuDelegate:
-            false // defaults to false, set to true to use GPU delegate
+            false 
         );
   }
 

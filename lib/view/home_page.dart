@@ -22,35 +22,18 @@ class _TongueTestState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    // To display the current output from the Camera,
-    // create a CameraController.
     loadCamera();
-    //loadModel();
-    // Next, initialize the controller. This returns a Future.
     _initializeControllerFuture = _controller.initialize();
   }
 
   @override
   void dispose() {
-    // Dispose of the controller when the widget is disposed.
     _controller.dispose();
     super.dispose();
   }
 
   loadCamera() {
     _controller = CameraController(cameras.last, ResolutionPreset.ultraHigh);
-    // _controller.initialize().then((value) {
-    //   if (!mounted) {
-    //     return;
-    //   } else {
-    //     setState(() {
-    //       _controller.startImageStream((imageStream) {
-    //         cameraImage = imageStream;
-    //         runModel();
-    //       });
-    //     });
-    //   }
-    // });
   }
 
   runModel() async {
@@ -77,11 +60,11 @@ class _TongueTestState extends State<HomePage> {
     await Tflite.loadModel(
         model: "assets/model.tflite",
         labels: "assets/labels.txt",
-        numThreads: 1, // defaults to 1
+        numThreads: 1,
         isAsset:
-            true, // defaults to true, set to false to load resources outside assets
+            true,
         useGpuDelegate:
-            false // defaults to false, set to true to use GPU delegate
+            false
         );
   }
 
@@ -92,7 +75,6 @@ class _TongueTestState extends State<HomePage> {
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            // If the Future is complete, display the preview.
             var screenSize = MediaQuery.of(context).size;
             return AspectRatio(
               aspectRatio: screenSize.width / screenSize.height,
@@ -109,7 +91,6 @@ class _TongueTestState extends State<HomePage> {
                         top: screenSize.width / 2),
                     decoration: BoxDecoration(
                         color: Colors.transparent,
-                        //shape: BoxShape.circle,
                         borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(200),
                             bottomRight: Radius.circular(200)),
@@ -125,36 +106,25 @@ class _TongueTestState extends State<HomePage> {
               ),
             );
           } else {
-            // Otherwise, display a loading indicator.
             return const Center(child: CircularProgressIndicator());
           }
         },
       ),
       floatingActionButton: FloatingActionButton(
-        // Provide an onPressed callback.
         onPressed: () async {
-          // Take the Picture in a try / catch block. If anything goes wrong,
-          // catch the error.
           try {
-            // Ensure that the camera is initialized.
             await _initializeControllerFuture;
 
-            // Attempt to take a picture and get the file `image`
-            // where it was saved.
             final image = await _controller.takePicture();
 
-            // If the picture was taken, display it on a new screen.
             await Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => DisplayResult(
-                  // Pass the automatically generated path to
-                  // the DisplayPictureScreen widget.
                   imagePath: image.path,
                 ),
               ),
             );
           } catch (e) {
-            // If an error occurs, log the error to the console.
             print(e);
           }
         },
