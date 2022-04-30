@@ -1,2 +1,7 @@
-Damage
-Undamage
+0 Car
+1 Bike
+2 Cat
+3 Dog
+4 Flower
+5 Horse
+6 Human
